@@ -5,8 +5,48 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { IAuthDto } from './dto';
+import {
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
+@ApiOkResponse({
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          token: {
+            type: 'string',
+          },
+        },
+      },
+    },
+  },
+})
+@ApiBadRequestResponse({
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          message: {
+            type: 'string',
+          },
+          error: {
+            type: 'string',
+          },
+          statusCode: {
+            type: 'number',
+          },
+        },
+      },
+    },
+  },
+})
 export class AuthController {
   constructor(private authService: AuthService) {}
 
