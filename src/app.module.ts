@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './api/auth/auth.module';
-import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './api/auth';
+import { PrismaModule } from './prisma';
 import { ConfigModule } from '@nestjs/config';
-import { UserController } from './api/user/user.controller';
-import { UserModule } from './api/user/user.module';
+import { SwaggerModule } from '@nestjs/swagger';
+import {
+  UserController,
+  UserModule,
+} from './api/user';
+import { SwaggerService } from './common/swagger';
 
 @Module({
   imports: [
@@ -14,7 +18,9 @@ import { UserModule } from './api/user/user.module';
       envFilePath: [`/.env`],
       isGlobal: true,
     }),
+    SwaggerModule,
   ],
   controllers: [UserController],
+  providers: [SwaggerService],
 })
 export class AppModule {}
